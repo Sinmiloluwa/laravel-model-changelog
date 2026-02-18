@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Sinmiloluwa\LaravelModelChangelog\Models\ChangelogEntry;
 use Sinmiloluwa\LaravelModelChangelog\Observer\ChangelogObserver;
 
+/**
+ * @method static observe(string $class)
+ * @method morphMany(string $class, string $string)
+ */
 trait HasChangelog
 {
     public static function bootHasChangelog(): void
@@ -78,21 +82,5 @@ trait HasChangelog
         }
 
         return $changes;
-    }
-
-    public function withoutChangelog(callable $callback): mixed
-    {
-        ChangelogObserver::pauseFor($this);
-
-        try {
-            return $callback();
-        } finally {
-            ChangelogObserver::resumeFor($this);
-        }
-    }
-
-    public function isChangelogPaused(): bool
-    {
-        return ChangelogObserver::isPausedFor($this);
     }
 }

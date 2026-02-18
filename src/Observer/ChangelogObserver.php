@@ -69,26 +69,11 @@ class ChangelogObserver
             return false;
         }
 
-        return ! $model->isChangelogPaused();
+        return true;
     }
 
-    protected function resolveCauser(): ?Model
+    protected function resolveCauser(): \Illuminate\Contracts\Auth\Authenticatable|null
     {
         return Auth::user();
-    }
-
-    public static function pauseFor(Model $model): void
-    {
-        static::$paused[spl_object_id($model)] = true;
-    }
-
-    public static function resumeFor(Model $model): void
-    {
-        unset(static::$paused[spl_object_id($model)]);
-    }
-
-    public static function isPausedFor(Model $model): bool
-    {
-        return isset(static::$paused[spl_object_id($model)]);
     }
 }

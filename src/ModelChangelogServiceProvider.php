@@ -14,4 +14,12 @@ class ModelChangelogServiceProvider extends ServiceProvider
             __DIR__ . '/../database/migrations/' => database_path('migrations'),
         ], 'model-changelog-migrations');
     }
+
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/model-changelog.php',
+            'model-changelog'
+        );
+    }
 }
